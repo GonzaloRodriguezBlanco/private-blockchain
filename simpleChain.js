@@ -25,12 +25,16 @@ class Block {
 
 class Blockchain {
     constructor() {
+        // TODO (1): Configure simpleChain.js with LevelDB to persist blockchain dataset using the level Node.js library.
         this.chain = [];
+        // TODO (5): Delete this due to the check of Genesis Block existence and creation in addBlock
         this.addBlock(new Block("First block in the chain - Genesis block"));
     }
 
     // Add new block
     addBlock(newBlock) {
+        // TODO (3): Check if a Genesis Block already exists. If not, one is created before adding the block
+        // TODO (4): Genesis block persist as the first block in the blockchain using LevelDB
         // Block height
         newBlock.height = this.chain.length;
         // UTC timestamp
@@ -41,23 +45,27 @@ class Blockchain {
         }
         // Block hash with SHA256 using newBlock and converting to a string
         newBlock.hash = SHA256(JSON.stringify(newBlock)).toString();
+        // TODO (2): Add a method to store newBlock with LevelDB
         // Adding block object to chain
         this.chain.push(newBlock);
     }
 
     // Get block height
     getBlockHeight() {
+        // TODO (9): Modify getBlockHeight() function to retrieve current block height within the LevelDB chain
         return this.chain.length - 1;
     }
 
     // get block
     getBlock(blockHeight) {
+        // TODO (8): Modify getBlock() function to retrieve a block by it's block height within the LevelDB chain
         // return object as a single string
         return JSON.parse(JSON.stringify(this.chain[blockHeight]));
     }
 
     // validate block
     validateBlock(blockHeight) {
+        // TODO (6): Modify the validateBlock() function to validate a block stored within LevelDB
         // get block object
         let block = this.getBlock(blockHeight);
         // get block hash
@@ -77,6 +85,7 @@ class Blockchain {
 
     // Validate blockchain
     validateChain() {
+        // TODO (7): Modify the validateChain() function to validate blockchain stored within LevelDB
         let errorLog = [];
         for (var i = 0; i < this.chain.length - 1; i++) {
             // validate block
