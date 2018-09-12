@@ -51,11 +51,12 @@ class Blockchain {
             .then((value) => {
                 return this.getBlockHeight()
             })
-            .then((blockHeight) => {
-                console.log('Block Height', blockHeight);
+            .then((lastBlockHeight) => {
+                console.log('Last Block Height', lastBlockHeight);
+                let blockHeight = lastBlockHeight + 1;
                 newBlock.height = blockHeight;
                 newBlock.time = new Date().getTime().toString().slice(0, -3);
-                return this.getBlock(blockHeight - 1);
+                return this.getBlock(lastBlockHeight);
             })
             .then((previousRawBlock) => {
                 let previousBlock = JSON.parse(previousRawBlock);
@@ -95,7 +96,7 @@ class Blockchain {
                     reject(err)
                 })
                 .on('close', function () {
-                    resolve(parseInt(lastHeight) + 1);
+                    resolve(parseInt(lastHeight));
                 });
         });
     }
